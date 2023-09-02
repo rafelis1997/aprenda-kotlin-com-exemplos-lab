@@ -39,6 +39,8 @@ fun main() {
     )
     
     react.matricular(Usuario("Marcos", 16), Usuario("Roberta", 19), Usuario("José", 48), Usuario("Marcos", 16))
+
+    println(react)
     
     for (inscrito in react.inscritos) {
         println(inscrito)
