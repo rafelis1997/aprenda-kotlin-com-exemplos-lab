@@ -9,7 +9,7 @@ data class ConteudoEducacional(
     var duracao: Int = 60,
 ) {
    init {
-       if (duracao < 10) {
+       if (duracao <= 0) {
             this.duracao = 10
        }
    }
