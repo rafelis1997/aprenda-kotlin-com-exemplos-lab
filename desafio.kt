@@ -1,21 +1,46 @@
 // [Template no Kotlin Playground](https://pl.kotl.in/WcteahpyN)
 
-enum class Nivel { BASICO, INTERMEDIARIO, DIFICIL }
+enum class Nivel { BASICO, INTERMEDIARIO, AVANCADO }
 
-class Usuario
+data class Usuario(val nome: String, val idade: Int)
 
-data class ConteudoEducacional(var nome: String, val duracao: Int = 60)
+data class ConteudoEducacional(
+    val nome: String, 
+    var duracao: Int = 60,
+) {
+   init {
+       if (duracao < 10) {
+            this.duracao = 10
+       }
+   }
+}
 
-data class Formacao(val nome: String, var conteudos: List<ConteudoEducacional>) {
+data class Formacao(val nome: String, val nivel: Nivel, val conteudos: List<ConteudoEducacional>) {
 
-    val inscritos = mutableListOf<Usuario>()
+    val inscritos = mutableSetOf<Usuario>()
     
-    fun matricular(usuario: Usuario) {
-        TODO("Utilize o parâmetro $usuario para simular uma matrícula (usar a lista de $inscritos).")
+    fun matricular(vararg usuarios: Usuario) {
+        for (usuario in usuarios) {
+            inscritos.add(usuario)
+        }
     }
 }
 
 fun main() {
-    TODO("Analise as classes modeladas para este domínio de aplicação e pense em formas de evoluí-las.")
-    TODO("Simule alguns cenários de teste. Para isso, crie alguns objetos usando as classes em questão.")
+    val react = Formacao(
+        "Reactjs", 
+        Nivel.INTERMEDIARIO, 
+        listOf(
+            ConteudoEducacional("HTML", 5),
+            ConteudoEducacional("Javascript", 20),
+            ConteudoEducacional("React - básico", 20 * 60), // 20 horas
+            ConteudoEducacional("React - avançado", 40 * 60), // 40 horas
+        )
+    )
+    
+    react.matricular(Usuario("Marcos", 16), Usuario("Roberta", 19), Usuario("José", 48), Usuario("Marcos", 16))
+    
+    for (inscrito in react.inscritos) {
+        println(inscrito)
+    }
 }
